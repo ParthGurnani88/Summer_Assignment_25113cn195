@@ -1,36 +1,43 @@
 #include <stdio.h>
 
-void findCommonElements(int arr1[], int size1, int arr2[], int size2) {
-    printf("Common elements: ");
-    int found = 0;
-
-    // Loop through the first array
-    for (int i = 0; i < size1; i++) {
-        // Check if the current element exists in the second array
-        for (int j = 0; j < size2; j++) {
-            if (arr1[i] == arr2[j]) {
-                printf("%d ", arr1[i]);
-                found = 1;
-                break; // Found a match, move to the next element in arr1
+void bubbleSort(int arr[], int size) {
+    // Outer loop for the number of passes
+    for (int i = 0; i < size - 1; i++) {
+        // Track if any swap happened in this pass (Optimization)
+        int swapped = 0; 
+        
+        // Inner loop for adjacent comparisons
+        for (int j = 0; j < size - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                // Swap arr[j] and arr[j+1]
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+                
+                swapped = 1; // A swap occurred
             }
         }
+        
+        // If no two elements were swapped in the inner loop, the array is sorted
+        if (swapped == 0) {
+            break;
+        }
     }
-
-    if (!found) {
-        printf("None");
-    }
-    printf("\n");
 }
 
 int main() {
-    // Same example sets from before!
-    int arrayA[] = {1, 2, 3, 4, 5};
-    int arrayB[] = {4, 5, 6, 7, 8};
-
-    int sizeA = sizeof(arrayA) / sizeof(arrayA[0]);
-    int sizeB = sizeof(arrayB) / sizeof(arrayB[0]);
-
-    findCommonElements(arrayA, sizeA, arrayB, sizeB);
-
+    int data[] = {5, 1, 4, 2, 8};
+    int size = sizeof(data) / sizeof(data[0]);
+    
+    printf("Original array: ");
+    for (int i = 0; i < size; i++) printf("%d ", data[i]);
+    printf("\n");
+    
+    bubbleSort(data, size);
+    
+    printf("Sorted array:   ");
+    for (int i = 0; i < size; i++) printf("%d ", data[i]);
+    printf("\n");
+    
     return 0;
 }
